@@ -1,0 +1,319 @@
+using System;
+
+namespace Hash_tables
+{
+    class Program
+    {
+        public string add = "";
+        public string search = "";
+        public char[] arr;
+        public int total = 0;
+        public int Hash_value;
+        public int hash_value2 = 0;
+        public int USERINPUT = 0;
+        public int [] count = new int [9];
+
+        //establishing node class
+        public MyList mylyst0 = new MyList();
+        public MyList mylyst1 = new MyList();
+        public MyList mylyst2 = new MyList();
+        public MyList mylyst3 = new MyList();
+        public MyList mylyst4 = new MyList();
+        public MyList mylyst5 = new MyList();
+        public MyList mylyst6 = new MyList();
+        public MyList mylyst7 = new MyList();
+        public MyList mylyst8 = new MyList();
+        public MyList mylyst9 = new MyList();
+
+        // initiliasing the new instance of the linked list for the hash table
+        MyList[] Hashtable = new MyList[10]; // creating an array of linked  list as my hash table (with 9 item of each array)
+
+        static void Main(string[] args)
+        {
+            Program p = new Program();
+
+            while (true) // constant loop 
+            {
+                Console.WriteLine("Please choose what you'd lide to do:\n1. Add to hash table \n2. Search hash table \n3. Delete hash entry \n4. Print hash table \n5. Output load factor\n");
+
+                p.USERINPUT = Int32.Parse(Console.ReadLine());
+
+                if (p.USERINPUT == 1)
+                {
+                    p.ADD();//adding item
+                }
+                else if (p.USERINPUT == 2)
+                {
+                    if (p.Search() == true)
+                    {
+                        Console.WriteLine("item is in the list");
+                    }
+                    else
+                    {
+                        Console.WriteLine("item is not in the list");
+                    }
+                    Console.ReadLine();
+                }
+                else if (p.USERINPUT == 3)
+                {
+                    p.Delete();//deletes item
+                }
+                else if (p.USERINPUT == 4)
+                {
+                    p.Display();//displays list
+                }
+            }
+
+        }
+        //function to add item to the hash table
+        private void ADD()
+        {
+            {
+                Console.WriteLine("please enter what you'd like to add");
+                add = Console.ReadLine();
+
+                //converts the string into an array of characters
+                for (int i = 0; i < add.Length; i++)
+                {
+                    arr = add.ToCharArray(0, add.Length);
+                    total = total + arr[i]; // and finds the sum of the ascii values of the string
+                }
+
+                //This is the hash function:
+                Hash_value = total % 100;
+                total = 0;
+                // double hash 
+                hash_value2 = Hash_value % 10;
+
+
+                //This adds the hashed value to the table
+                Hashtable[0] = mylyst0;
+                Hashtable[1] = mylyst1;
+                Hashtable[2] = mylyst2;
+                Hashtable[3] = mylyst3;
+                Hashtable[4] = mylyst4;
+                Hashtable[5] = mylyst5;
+                Hashtable[6] = mylyst6;
+                Hashtable[7] = mylyst7;
+                Hashtable[8] = mylyst8;
+                Hashtable[9] = mylyst9;
+
+                switch (hash_value2)
+                {
+                    case 0:
+                        mylyst0.AddToEnd(Hash_value);
+                        break;
+                    case 1:
+                        mylyst1.AddToEnd(Hash_value);
+                        break;
+                    case 2:
+                        mylyst2.AddToEnd(Hash_value);
+                        break;
+                    case 3:
+                        mylyst3.AddToEnd(Hash_value);
+                        break;
+                    case 4:
+                        mylyst4.AddToEnd(Hash_value);
+                        break;
+                    case 5:
+                        mylyst5.AddToEnd(Hash_value);
+                        break;
+                    case 6:
+                        mylyst6.AddToEnd(Hash_value);
+                        break;
+                    case 7:
+                        mylyst7.AddToEnd(Hash_value);
+                        break;
+                    case 8:
+                        mylyst8.AddToEnd(Hash_value);
+                        break;
+                    case 9:
+                        mylyst9.AddToEnd(Hash_value);
+                        break;
+
+
+                    default:
+                        break;
+                }
+
+                count[hash_value2]++;
+            }
+        }
+
+        //Function to delete item from the hash table
+        private void Delete()
+        {
+            Console.WriteLine("Please enter what you'd like to delete from the hash");
+            search = Console.ReadLine();
+
+            //converts the string into an array of characters
+            for (int i = 0; i < search.Length; i++)
+            {
+                arr = search.ToCharArray(0, search.Length);
+                total = total + arr[i]; // and finds the sum of the ascii values of the string
+            }
+
+            //This is the hash function:
+            Hash_value = total % 100;
+            total = 0;
+            // double hash 
+            hash_value2 = Hash_value % 10;
+
+            //searches all nodes along the linked list bucket
+            for (int i = 0; i < count[hash_value2]; i++)
+            {
+                if (Hashtable[hash_value2].headNode != null)
+                {
+                    if (Hashtable[hash_value2].contains(Hashtable[hash_value2], Convert.ToString(Hash_value)))
+                    {
+                        
+                    }
+                }
+            }
+        }
+
+        //Function to search item from the hash table
+        private bool Search ()
+        {
+            Console.WriteLine("please enter what you'd like to search");
+             search = Console.ReadLine();
+
+            //converts the string into an array of characters
+            for (int i = 0; i < search.Length; i++)
+            {
+                arr = search.ToCharArray(0, search.Length);
+                total = total + arr[i]; // and finds the sum of the ascii values of the string
+            }
+
+            //This is the hash function:
+            Hash_value = total % 100;
+            total = 0;
+            // double hash 
+            hash_value2 = Hash_value % 10;
+
+            //searches all nodes along the linked list bucket
+            for (int i = 0; i < count[hash_value2]; i++)
+            {
+                if (Hashtable[hash_value2].headNode != null)
+                {
+                    if (Hashtable[hash_value2].contains(Hashtable[hash_value2],Convert.ToString(Hash_value)))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        //Function to display and returns the list
+        private void Display()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                if (Hashtable[i].headNode == null)
+                {
+                    Console.Write("| |");
+                }
+                else
+                {
+                    Hashtable[i].Print();
+                }
+                Console.WriteLine();
+            }
+            Console.ReadLine();
+        }
+    
+    }
+
+    //This is my node class 
+    public class Node
+    {
+        // Attributes of the node class (the data and the node)
+        public int data;
+        public Node next;
+
+        //Constructor 
+        public Node (int i)
+        {
+            data = i;
+            next = null;
+        }
+
+        //Print Function for displaying list
+        public void Print()
+        {
+            Console.Write("|{0}|->", data);
+            if (next != null)
+            {
+                next.Print();
+            }
+        }
+        //Method to add items to end of linked list 
+        public void AddToEnd(int data)
+        {
+            if (next == null)
+            {
+                next = new Node(data);
+            }
+            else
+            {
+                next.AddToEnd(data);
+            }
+        }
+    }
+
+    // this is my list class
+    public class MyList
+    {
+        public Node headNode;//creating the head
+
+        public MyList()
+        {
+            headNode = null;
+        }
+        //addinging to end of list
+        public void AddToEnd(int data)
+        {
+            if (headNode == null)
+            {
+                headNode = new Node(data);
+            }
+            else
+            {
+                headNode.AddToEnd(data);
+            }
+        }
+        //adding to beginning
+        public void AddToBeginning(int data)
+        {
+            if (headNode ==null)
+            {
+                headNode = new Node(data);
+            }
+            else
+            {
+                Node temp =new Node(data);
+                temp.next = headNode;
+                headNode = temp;
+            }
+        }
+
+        public bool contains(MyList datae, string data)
+        {
+            if (true)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        //Print Function for displaying list
+        public void Print()
+        {
+            if (headNode != null)
+            {
+                headNode.Print();
+            }
+        }
+    }
+}
